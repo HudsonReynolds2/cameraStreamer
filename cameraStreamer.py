@@ -40,10 +40,10 @@ def index():
 
 if __name__ == '__main__':
     local_ip = get_local_ip()
-    print(f"🔗 Starting camera server...")
-    print(f"📷 Local access: http://localhost:5000")
-    print(f"🌐 Network access: http://{local_ip}:5000")
-    print(f"📡 For WSL2, try: http://{local_ip}:5000/video_feed")
-    print(f"⚠️  Make sure Windows Firewall allows port 5000")
+    print(f"Starting camera server...")
+    print(f"Local access: http://localhost:5000")
+    print(f"Network access: http://{local_ip}:5000")
+    print(f"For WSL2, try: http://{local_ip}:5000/video_feed")
+    print(f"Make sure Windows Firewall allows port 5000")
     
     app.run(host='0.0.0.0', port=5000)
