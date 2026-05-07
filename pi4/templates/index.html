@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pi Camera v2 Stream</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1 style="text-align:center">Pi Camera v2 Live Stream</h1>
+
+    <!-- ── Main controls ── -->
+    <div class="controls">
+        <div class="control-group">
+            <label>Resolution</label>
+            <select id="resolution">
+                <option value="480p">480p (640×480)</option>
+                <option value="720p">720p (1280×720)</option>
+                <option value="1080p" selected>1080p (1920×1080)</option>
+            </select>
+        </div>
+
+        <div class="control-group">
+            <label>Frame Rate</label>
+            <select id="framerate">
+                <option value="15">15 FPS</option>
+                <option value="24">24 FPS</option>
+                <option value="30" selected>30 FPS</option>
+                <option value="60">60 FPS (480p only)</option>
+            </select>
+        </div>
+
+        <div class="control-group">
+            <label>&nbsp;</label>
+            <button class="btn-blue" onclick="applyStreamSettings()">Apply</button>
+        </div>
+
+        <div class="control-group">
+            <label>Rotation</label>
+            <button class="btn-blue" onclick="rotateCamera()">Rotate 90°</button>
+        </div>
+
+        <div class="control-group">
+            <label>Still (3280×2464)</label>
+            <button class="btn-green" onclick="captureImage()">📷 Capture</button>
+        </div>
+
+        <div class="control-group">
+            <label>Browse</label>
+            <button class="btn-purple" onclick="window.open('/captures','_blank')">🖼 Gallery</button>
+        </div>
+    </div>
+
+    <!-- ── Exposure / noise controls ── -->
+    <div class="exposure-panel">
+        <div class="control-group">
+            <label>Exposure</label>
+            <select id="exposureMode" onchange="onExposureModeChange()">
+                <option value="auto" selected>Auto</option>
+                <option value="manual">Manual</option>
+            </select>
+        </div>
+
+        <div id="manualExposureControls" style="display:none; gap:20px; display:none; flex-wrap:wrap; justify-content:center; align-items:flex-end;">
+            <div class="control-group">
+                <label>Shutter</label>
+                <input type="range" id="exposureSlider"
+                       min="100" max="100000" step="100" value="10000"
+                       oninput="onExposureSlider()">
+                <div class="range-value" id="exposureDisplay">10.0 ms</div>
+            </div>
+
+            <div class="control-group">
+                <label>Gain (ISO)</label>
+                <input type="range" id="gainSlider"
+                       min="1.0" max="16.0" step="0.5" value="1.0"
+                       oninput="onGainSlider()">
+                <div class="range-value" id="gainDisplay">1.0×</div>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label>Noise Reduction</label>
+            <select id="noiseMode" onchange="onNoiseMode()">
+                <option value="0">Off</option>
+                <option value="1" selected>Fast</option>
+                <option value="2">High Quality</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- ── Stream ── -->
+    <div class="stream-container">
+        <img src="/video_feed" alt="Camera Stream" id="videoStream">
+        <div class="info">
+            Streaming: <span id="currentRes">1920×1080</span>
+            @ <span id="currentFps">30</span> FPS
+            | Rotation: <span id="currentRotation">0</span>°
+        </div>
+        <div class="note">
+            Stills captured at full 3280×2464 (8MP) with matching orientation.
+        </div>
+        <div class="status" id="status"></div>
+    </div>
+
+    <script src="/static/stream.js"></script>
+</body>
+</html>

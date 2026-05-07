@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Captures — Pi Camera v2</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>📷 Captures</h1>
+    <div class="subtitle">
+        <a href="/">← Back to stream</a>
+        &nbsp;·&nbsp;
+        Saved to {{ capture_dir }}
+    </div>
+
+    {% if images %}
+        <div class="count">
+            {{ images|length }} image{{ 's' if images|length != 1 else '' }}
+        </div>
+        <div class="grid">
+            {% for img in images %}
+            <div class="card" id="card-{{ img }}">
+                <a href="/captures/{{ img }}" target="_blank">
+                    <img src="/captures/{{ img }}" alt="{{ img }}" loading="lazy">
+                </a>
+                <div class="card-info">
+                    <span class="card-name">{{ img }}</span>
+                    <button class="btn-red"
+                            style="padding:4px 10px; border-radius:4px; font-size:12px; cursor:pointer; color:#fff; white-space:nowrap"
+                            onclick="deleteImage('{{ img }}')">Delete</button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty">No captures yet. Go take some photos!</div>
+    {% endif %}
+
+    <script src="/static/gallery.js"></script>
+</body>
+</html>
